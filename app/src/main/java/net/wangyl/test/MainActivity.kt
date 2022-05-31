@@ -64,7 +64,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         initView()
 
-        TestJni() //测试jni代码
+        TestJni() //测试jni代码 静态注册
+        println(TestJni.doubleInt(9))  //动态注册+传参int+返回long
+        println(TestJni.getString("你好吗")) //动态注册+传参string+返回string
         //启动服务，测试同时启动服务和绑定服务的生命周期
         startService(Intent(this@MainActivity, ServerService::class.java))
         bindMyService()
