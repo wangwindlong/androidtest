@@ -1,0 +1,36 @@
+属性动画：
+    ViewPropertyAnimator: view.animate().translationX(200.dp).scaleX(2f).setStartDelay(1000) 只能改默认的几个属性：平移，alpha，scale，rotation
+    属性动画: 创建 ObjectAnimator.ofXXX 启动 ObjectAnimator.start() 设置插值器: Interpolator(DecelerateInterpolator)
+        PropertyValuesHolder  设置多个属性动画 配合 Keyframe 做更精细的动画
+    AnimatorSet:  a = AnimatorSet()  a.playTogether(animator1, 2) a.start()
+        TypeEvaluator 设置动画完成度, 还可以设置监听器 setXXXListener
+        ValueAnimator 对数值进行渐变
+    propertyvaluesholder：把动画拆分，然后一起作用于某个view
+        val ph1 = PropertyValuesHolder.ofFloat("radius", 150.dp)
+        ObjectAnimator.ofPropertyValuesHolder(view, ph1, ph2).start()
+    keyframe: 结合propertyvaluesholder做更精细的动画
+        val kf1 = Keyframe.ofFloat(0f, 0f)
+        val kf2 = Keyframe.ofFloat(0.2f, 0.5f * length)
+        val kfHolder = PropertyValuesHolder.ofKeyFrame("radius", kf1, kf2)
+        ObjectAnimator.ofPropertyValuesHolder(view, kfHolder).start()
+    interpolator: 插值器 提供四种：
+        AccelerateDecelerateInterpolator(先加速后减速，适用场景内动画)
+        AccelerateInterpolator：加速动画，适合滑出屏幕，出场动画
+        DecelerateInterpolator：减速动画，适合入场
+        LinearInterpolator 匀速动画
+    TypeEvaluator：动画完成的路径
+        ObjectAnimator.ofObject(view, "point", PointEvaluator(), endPoint).start()
+        class PointEvaluator: TypeEvaluator<PointF> {
+            override fun evaluate(fraction: Float, startValue: PointF, endValue: PointF): PointF {
+                val x = startValue.x +fraction* (endValue.x - startValue.x)
+                val y = startValue.y +fraction* (endValue.y - startValue.y)
+                return PointF(x, y)
+            }
+        }
+    Listeners：动画监听
+    ValueAnimator：
+
+补间动画
+
+
+

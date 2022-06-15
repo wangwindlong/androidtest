@@ -17,16 +17,20 @@ interface Clickable {
 }
 
 class Button : Clickable {
-    @Volatile
+//    @Volatile
 //    var count: AtomicInteger = AtomicInteger()
-    var count: Int = 0
+    var count: AtomicInteger = AtomicInteger()
     val observers: ConcurrentLinkedDeque<Observer> = ConcurrentLinkedDeque()
     override fun click() {
 //        count.incrementAndGet()
-        count++
-        for (observe in observers) {
-            observe.onClick(count)
+        synchronized(this) {
+            count.incrementAndGet()
+
+            for (observe in observers) {
+                observe.onClick(count.get())
+            }
         }
+
     }
 
     override fun register(observer: Observer) {
@@ -52,27 +56,29 @@ class ColorObserver: Observer {
 }
 
 fun main() {
-//    val button = Button()
-//    button.register(TextObserver())
-////    button.register(ColorObserver())
-//    val executors = Executors.newFixedThreadPool(100)
-//    for (i in 1..1000) {
-//        executors.execute {
-//            button.click()
-//        }
-//    }
-//    executors.shutdown()
-
-    val queue: Queue<String> = LinkedList()
-
-    for (i in 1..100) {
-        Thread {
-            queue.offer("用户$i")
-        }.start()
+    val button = Button()
+    val observer = TextObserver()
+    button.register(observer)
+    button.register(observer)
+    button.register(ColorObserver())
+    val executors = Executors.newFixedThreadPool(100)
+    for (i in 1..1000) {
+        executors.execute {
+            button.click()
+        }
     }
-    Thread {
-        queue.offer("1")
-    }.start()
-    TestThread().start()
+    executors.shutdown()
+
+//    val queue: Queue<String> = LinkedList()
+//
+//    for (i in 1..100) {
+//        Thread {
+//            queue.offer("用户$i")
+//        }.start()
+//    }
+//    Thread {
+//        queue.offer("1")
+//    }.start()
+//    TestThread().start()
 
 }

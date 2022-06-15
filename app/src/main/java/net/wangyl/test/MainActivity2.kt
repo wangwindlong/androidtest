@@ -4,9 +4,8 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
+import android.os.*
 import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
-import android.os.IBinder
 import android.util.Log
 import net.wangyl.test.databinding.ActivityMain2Binding
 import net.wangyl.test.ipc.Person
@@ -20,6 +19,12 @@ class MainActivity2 : AppCompatActivity() {
     var mService: PersonManager? = null
 
     var mBinded = false
+    val mHandlerThread:HandlerThread = object: HandlerThread("handlerThread") {
+        override fun run() {
+            println("mHandlerThread am running")
+            super.run()
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,6 +57,14 @@ class MainActivity2 : AppCompatActivity() {
             Log.d("MainActivity2", "获取用户")
             println(mService?.getPersonList())
         }
+
+        mHandlerThread.start()
+        val workHandler = object: Handler(mHandlerThread.getLooper()) {
+            override fun handleMessage(msg: Message) {
+                println("workHandler handleMessage ${msg.obj} ${Thread.currentThread().name}")
+            }
+        }
+        workHandler.sendMessageDelayed(Message.obtain().apply { obj = "haha" }, 1000)
     }
 
     override fun onDestroy() {
@@ -60,5 +73,6 @@ class MainActivity2 : AppCompatActivity() {
             Log.d("MainActivity2", "我MainActivity2退出了 开始解绑")
             unbindService(mServiceConnection)
         }
+//        mHandlerThread.quit()
     }
 }
