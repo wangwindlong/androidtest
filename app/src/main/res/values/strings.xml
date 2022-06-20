@@ -19,4 +19,9 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
+
+    <string name="dialog_permission_title">权限申请</string>
+    <string name="dialog_permission_default_message">需要有以下权限app才能正常运行</string>
+    <string name="dialog_permission_button_positive">确定</string>
 </resources>

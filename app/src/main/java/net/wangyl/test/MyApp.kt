@@ -40,5 +40,9 @@ class MyApp: Application() {
             }
             return false
         }
+
+        fun getIdString(id: Int): String {
+            return instance.applicationContext?.getString(id) ?: ""
+        }
     }
 }
