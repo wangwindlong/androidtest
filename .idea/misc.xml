@@ -3,6 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../../../.gradle/caches/transforms-3/7d18bf339c2b14d29bf7bbc3230f6971/transformed/preference-1.2.0/res/layout/preference_list_fragment.xml" value="0.25833333333333336" />
+        <entry key="../../../../../.gradle/caches/transforms-3/7d18bf339c2b14d29bf7bbc3230f6971/transformed/preference-1.2.0/res/layout/preference_recyclerview.xml" value="0.25833333333333336" />
+        <entry key="../../../../../Library/Android/sdk/platforms/android-31/data/res/layout/preference_list_fragment.xml" value="0.25833333333333336" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.18931159420289856" />
         <entry key="app/src/main/res/layout/activity_main2.xml" value="0.2730496453900709" />
         <entry key="app/src/main/res/layout/app_bar_main.xml" value="0.18931159420289856" />
